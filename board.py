@@ -65,7 +65,15 @@ class Board:
     def print(self):
         for y in range(self.height - 1, -1, -1):
             for x in range(self.width):
-                print(str(self.board[x][y]), end = "")
+                color = self.board[x][y]
+                char = ''
+                if color == empty:
+                    char = ' '
+                elif color == red:
+                    char = 'X'
+                elif color == blue:
+                    char = 'O'
+                print(' ' + char, end = "")
             print()
 
 #b = Board(7, 6, 4)
