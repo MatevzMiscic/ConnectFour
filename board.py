@@ -13,14 +13,22 @@ class Board:
         self.history = []
         self.moves = 0
 
-    def play(self, row):
+    def play(self, column):
         assert self.moves < self.width * self.height
-        assert 0 <= row < self.height
-        assert self.ground[row] < self.height
-        self.board[row][self.ground[row]] = self.moves % 2
-        self.ground[row] += 1
-        self.history.append(row)
+        assert 0 <= column < self.height
+        assert self.ground[column] < self.height
+        color = self.moves % 2
+        self.board[column][self.ground[column]] = color
+        self.ground[column] += 1
+        self.history.append(column)
         self.moves += 1
+
+    def undo(self):
+        assert self.moves > 0
+        column = self.history.pop()
+        self.moves -= 1
+        self.ground[column] -= 1
+        self.board[column][self.ground[column]] = empty
 
     def print(self):
         for y in range(self.height - 1, -1, -1):
