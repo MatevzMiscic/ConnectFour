@@ -18,7 +18,7 @@ class Board:
 
     def play(self, column):
         assert self.moves < self.width * self.height
-        assert 0 <= column < self.height
+        assert 0 <= column < self.width
         assert self.ground[column] < self.height
         color = self.moves % 2
         self.board[column][self.ground[column]] = color
@@ -33,6 +33,9 @@ class Board:
         self.ground[column] -= 1
         self.board[column][self.ground[column]] = empty
 
+    def validIndex(self, x, y):
+        return 0 <= x and x < self.width and 0 <= y and y < self.height
+
     def outcome(self):
         dx = [1, 1, 0, -1]
         dy = [0, -1, -1, -1]
@@ -40,15 +43,20 @@ class Board:
         for X in range(self.width):
             for Y in range(self.height):
                 color = self.board[X][Y]
+                if color == 2:
+                    continue
                 for d in range(directions):
                     number = 1
-                    x = X, y = Y
+                    x = X
+                    y = Y
                     for i in range(self.connect - 1):
-                        x += dx, y += dy
-                        if grid[x][y] != color:
+                        x += dx[d]
+                        y += dy[d]
+                        if self.validIndex(x, y) and self.board[x][y] == color:
+                            number += 1
+                        else:
                             break
-                        number += 1
-                    if number == connect:
+                    if number == self.connect:
                         return color
         if self.moves == self.width * self.height:
             return draw
@@ -60,6 +68,6 @@ class Board:
                 print(str(self.board[x][y]), end = "")
             print()
 
-b = Board(7, 6, 4)
-b.play(3)
-b.print()
+#b = Board(7, 6, 4)
+#b.play(3)
+#b.print()
