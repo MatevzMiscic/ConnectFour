@@ -2,6 +2,9 @@ empty = 2
 red = 0
 blue = 1
 
+inProgress = 2
+draw = 3
+
 class Board:
 
     def __init__(self, width, height, connect):
@@ -29,6 +32,27 @@ class Board:
         self.moves -= 1
         self.ground[column] -= 1
         self.board[column][self.ground[column]] = empty
+
+    def outcome(self):
+        dx = [1, 1, 0, -1]
+        dy = [0, -1, -1, -1]
+        directions = 4
+        for X in range(self.width):
+            for Y in range(self.height):
+                color = self.board[X][Y]
+                for d in range(directions):
+                    number = 1
+                    x = X, y = Y
+                    for i in range(self.connect - 1):
+                        x += dx, y += dy
+                        if grid[x][y] != color:
+                            break
+                        number += 1
+                    if number == connect:
+                        return color
+        if self.moves == self.width * self.height:
+            return draw
+        return inProgress
 
     def print(self):
         for y in range(self.height - 1, -1, -1):
