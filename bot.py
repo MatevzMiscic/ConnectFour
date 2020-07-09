@@ -11,10 +11,10 @@ def minimax(board, color, depth, alpha=-win, beta=win):
             return -win
         return 0
     value = -win
-    for col in range(board.width):
-        if board.ground[col] >= board.height:
+    for move in board.moves:
+        if board.ground[move] >= board.height:
             continue
-        board.play(col)
+        board.play(move)
         value = max(value, -minimax(board, 1 - color, depth - 1, -beta, -alpha))
         board.undo()
         alpha = max(alpha, value)
@@ -23,15 +23,15 @@ def minimax(board, color, depth, alpha=-win, beta=win):
     return value
 
 def takeTurn(board, color, depth):
-    value = -200
+    value = -2 * win
     move = 0
-    for col in range(board.width):
+    for col in board.moves:
         if board.ground[col] >= board.height:
             continue
         board.play(col)
         val = -minimax(board, 1 - color, depth - 1)
         board.undo()
-        if val > value or val == value and abs(2 * col - board.width) < abs(2 * move - board.width):
+        if val > value:
             value = val
             move = col
     return move

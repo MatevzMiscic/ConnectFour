@@ -14,22 +14,28 @@ class Board:
         self.board = [[empty for y in range(height)] for x in range(width)]
         self.ground = [0 for x in range(width)]
         self.history = []
-        self.moves = 0
+        self.turns = 0
+        self.moves = []
+        move = width // 2
+        for i in range(width):
+            move += ((-1) ** i) * i
+            self.moves.append(move)
+        print(self.moves)
 
     def play(self, column):
-        assert self.moves < self.width * self.height
+        assert self.turns < self.width * self.height
         assert 0 <= column < self.width
         assert self.ground[column] < self.height
-        color = self.moves % 2
+        color = self.turns % 2
         self.board[column][self.ground[column]] = color
         self.ground[column] += 1
         self.history.append(column)
-        self.moves += 1
+        self.turns += 1
 
     def undo(self):
-        assert self.moves > 0
+        assert self.turns > 0
         column = self.history.pop()
-        self.moves -= 1
+        self.turns -= 1
         self.ground[column] -= 1
         self.board[column][self.ground[column]] = empty
 
@@ -58,7 +64,7 @@ class Board:
                             break
                     if number == self.connect:
                         return color
-        if self.moves == self.width * self.height:
+        if self.turns == self.width * self.height:
             return draw
         return inProgress
 

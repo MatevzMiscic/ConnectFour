@@ -7,10 +7,10 @@ colors = ["Red", "Blue"]
 
 while b.outcome() == 2:
     column = 0
-    color = b.moves % 2
+    color = b.turns % 2
     print(colors[color] + "'s turn: ", end="")
     if bots[color]:
-        column = bot.takeTurn(b, color, 4)
+        column = bot.takeTurn(b, color, 5)
         print(column + 1)
     else:
         column = int(input()) - 1
