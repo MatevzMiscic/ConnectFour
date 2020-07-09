@@ -3,6 +3,11 @@ import board
 
 win = 100
 
+def sign(color1, color2):
+    if color1 == color2:
+        return 1
+    return -1
+
 def findTraps(b):
     directions = 6
     dx = [-1, -1, 0, 1, 1, 1]
@@ -57,7 +62,7 @@ def findTraps(b):
             y += dY[d]
     return traps
 
-def evaluate(b):
+def simpleEvaluate(b):
     points = [0.0, 0.0]
     traps = findTraps(b)
     for c in [0, 1]:
@@ -69,10 +74,52 @@ def evaluate(b):
                     points[c] += (1 - 0.5 ** traps[x][y][2 * c + 1]) / 2
     return points[0] - points[1]
 
-def sign(color1, color2):
-    if color1 == color2:
-        return 1
-    return -1
+def evaluate(b):
+    value = 0.0
+    points = [0.0, 0.0]
+    traps = findTraps(b)
+    color = b.turns % 2
+    groundTraps = [0, 0]
+    for x in range(b.width):
+        if b.ground[x] < b.height:
+            groundTraps[board.red] += traps[x][b.ground[x]][2 * board.red]
+            groundTraps[board.blue] += traps[x][b.ground[x]][2 * board.blue]
+    if groundTraps[color] >= 1:
+        return sign(color, 0) * win
+    if groundTraps[1 - color] >= 2:
+        return sign(1 - color, 0) * win
+    doubleTrapHeight = [b.height, b.height]
+    lateGame = 0
+    for x in range(b.width):
+        winner = [board.empty, board.empty]
+        for y in range(b.ground[x] + 1, b.height):
+            for c in [0, 1]:
+                index = (b.height - y + c - 1) % 2
+                factor = 1.5 - 0.5 * (y / b.height)
+                if traps[x][y - 1][2 * (1 - c)] == 1:
+                    factor *= 0.3
+                elif traps[x][y - 1][2 * c] == 1:
+                    factor *= 2.0
+                if winner[index] == board.empty:
+                    factor *= 2.0
+                value += sign(c, 0) * factor * max(traps[x][y][2 * c], (1 - 0.5 ** traps[x][y][2 * c + 1]) / 2)
+                if traps[x][y][2 * c] == 1:
+                    if traps[x][y - 1][2 * c] == 1 and winner[0] != 1 - c and winner[1] != 1 - c:
+                        doubleTrapHeight[c] = min(doubleTrapHeight[c], y - b.ground[x] - 1)
+                    if winner[index] == board.empty:
+                        winner[index] = c
+            if traps[x][y][0] == 1 and traps[x][y][2] == 1:
+                break
+        if winner[0] == board.red and winner[1] != board.blue:
+            lateGame += 1
+        elif winner[0] == board.blue and winner[1] != board.red:
+            lateGame -= 1
+        value += (1 + 2 * b.turns / (b.width * b.height)) * lateGame
+    if doubleTrapHeight[0] < b.height or doubleTrapHeight[1] < b.height:
+        if doubleTrapHeight[color] <= doubleTrapHeight[1 - color]:
+            return sign(color, 0) * (win - doubleTrapHeight[color])
+        return sign(1 - color, 0) * (win - doubleTrapHeight[1 - color])
+    return value
 
 def minimax(b, color, depth, alpha=-win, beta=win):
     outcome = b.outcome()
@@ -82,13 +129,6 @@ def minimax(b, color, depth, alpha=-win, beta=win):
         return 0
     if depth == 0:
         return sign(color, 0) * evaluate(b)
-
-    if depth == 0 or outcome <= 1:
-        if outcome == color:
-            return win
-        elif outcome == 1 - color:
-            return -win
-        return 0
     value = -win
     for move in b.moves:
         if b.ground[move] >= b.height:
