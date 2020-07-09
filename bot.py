@@ -3,6 +3,11 @@ import board
 
 win = 100
 
+def sign(color1, color2):
+    if color1 == color2:
+        return 1
+    return -1
+
 def minimax(board, color, depth, alpha=-win, beta=win):
     outcome = board.outcome()
     if depth == 0 or outcome <= 1:
@@ -90,3 +95,15 @@ def findTraps(b):
             x += dX[d]
             y += dY[d]
     return traps
+
+def evaluate(b):
+    point = [0.0, 0.0]
+    traps = findTraps(b)
+    for c in [0, 1]:
+        for x in range(b.width):
+            for y in range(b.height):
+                if traps[x][y][2 * c] == 1:
+                    points[c] += 1
+                elif traps[x][y][2 * c + 1] >= 1:
+                    points[c] += (1 - 0.5 ** traps[x][y][2 * c + 1]) / 2
+    return points[0] - points[1]
