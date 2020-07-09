@@ -28,7 +28,7 @@ while b.outcome() == 2:
     color = b.turns % 2
     print(colors[color] + "'s turn: ", end="")
     if bots[color]:
-        column = bot.takeTurn(b, color, 6)
+        column = bot.takeTurn(b, color, 5)
         print(column + 1)
     else:
         column = int(input()) - 1
@@ -36,7 +36,7 @@ while b.outcome() == 2:
             print("Invalid move.")
             continue
     b.play(column)
-    printTraps(b)
+    print("Game value:", bot.evaluate(b))
     b.print()
 
 state = b.outcome()

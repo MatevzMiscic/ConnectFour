@@ -10,7 +10,7 @@ class Board:
     def __init__(self, width, height, connect):
         self.width = width
         self.height = height
-        self.connect = min(width, height, connect)
+        self.connect = min(width, height, max(connect, 3))
         self.board = [[empty for y in range(height)] for x in range(width)]
         self.ground = [0 for x in range(width)]
         self.history = []
@@ -20,7 +20,6 @@ class Board:
         for i in range(width):
             move += ((-1) ** i) * i
             self.moves.append(move)
-        print(self.moves)
 
     def play(self, column):
         assert self.turns < self.width * self.height
@@ -81,7 +80,3 @@ class Board:
                     char = 'O'
                 print(' ' + char, end = "")
             print()
-
-#b = Board(7, 6, 4)
-#b.play(3)
-#b.print()

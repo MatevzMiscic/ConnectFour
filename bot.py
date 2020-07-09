@@ -3,45 +3,6 @@ import board
 
 win = 100
 
-def sign(color1, color2):
-    if color1 == color2:
-        return 1
-    return -1
-
-def minimax(board, color, depth, alpha=-win, beta=win):
-    outcome = board.outcome()
-    if depth == 0 or outcome <= 1:
-        if outcome == color:
-            return win
-        elif outcome == 1 - color:
-            return -win
-        return 0
-    value = -win
-    for move in board.moves:
-        if board.ground[move] >= board.height:
-            continue
-        board.play(move)
-        value = max(value, -minimax(board, 1 - color, depth - 1, -beta, -alpha))
-        board.undo()
-        alpha = max(alpha, value)
-        if alpha >= beta:
-            break
-    return value
-
-def takeTurn(board, color, depth):
-    value = -2 * win
-    move = 0
-    for col in board.moves:
-        if board.ground[col] >= board.height:
-            continue
-        board.play(col)
-        val = -minimax(board, 1 - color, depth - 1)
-        board.undo()
-        if val > value:
-            value = val
-            move = col
-    return move
-
 def findTraps(b):
     directions = 6
     dx = [-1, -1, 0, 1, 1, 1]
@@ -97,7 +58,7 @@ def findTraps(b):
     return traps
 
 def evaluate(b):
-    point = [0.0, 0.0]
+    points = [0.0, 0.0]
     traps = findTraps(b)
     for c in [0, 1]:
         for x in range(b.width):
@@ -107,3 +68,49 @@ def evaluate(b):
                 elif traps[x][y][2 * c + 1] >= 1:
                     points[c] += (1 - 0.5 ** traps[x][y][2 * c + 1]) / 2
     return points[0] - points[1]
+
+def sign(color1, color2):
+    if color1 == color2:
+        return 1
+    return -1
+
+def minimax(b, color, depth, alpha=-win, beta=win):
+    outcome = b.outcome()
+    if outcome <= 1:
+        return sign(color, outcome) * win
+    elif outcome == board.draw:
+        return 0
+    if depth == 0:
+        return sign(color, 0) * evaluate(b)
+
+    if depth == 0 or outcome <= 1:
+        if outcome == color:
+            return win
+        elif outcome == 1 - color:
+            return -win
+        return 0
+    value = -win
+    for move in b.moves:
+        if b.ground[move] >= b.height:
+            continue
+        b.play(move)
+        value = max(value, -minimax(b, 1 - color, depth - 1, -beta, -alpha))
+        b.undo()
+        alpha = max(alpha, value)
+        if alpha >= beta:
+            break
+    return value
+
+def takeTurn(board, color, depth):
+    value = -2 * win
+    move = 0
+    for col in board.moves:
+        if board.ground[col] >= board.height:
+            continue
+        board.play(col)
+        val = -minimax(board, 1 - color, depth - 1)
+        board.undo()
+        if val > value:
+            value = val
+            move = col
+    return move
