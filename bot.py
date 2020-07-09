@@ -1,20 +1,25 @@
 import board
 
-def minimax(board, color, depth):
+win = 100
+
+def minimax(board, color, depth, alpha=-win, beta=win):
     outcome = board.outcome()
     if depth == 0 or outcome <= 1:
         if outcome == color:
-            return 100
+            return win
         elif outcome == 1 - color:
-            return -100
+            return -win
         return 0
-    value = -100
+    value = -win
     for col in range(board.width):
         if board.ground[col] >= board.height:
             continue
         board.play(col)
-        value = max(value, -minimax(board, 1 - color, depth - 1))
+        value = max(value, -minimax(board, 1 - color, depth - 1, -beta, -alpha))
         board.undo()
+        alpha = max(alpha, value)
+        if alpha >= beta:
+            break
     return value
 
 def takeTurn(board, color, depth):
