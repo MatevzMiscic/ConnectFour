@@ -70,6 +70,30 @@ class Board:
             return draw
         return inProgress
 
+    def isWinningToken(self, x, y):
+        if not self.validIndex(x, y):
+            return False
+        color = self.board[x][y]
+        if color == 2:
+             return False
+        dx = [1, 1, 0, -1, -1, -1, 0, 1]
+        dy = [0, -1, -1, -1, 0, 1, 1, 1]
+        directions = 8
+        for d in range(directions):
+            number = 1
+            X = x
+            Y = y
+            for i in range(self.connect - 1):
+                X += dx[d]
+                Y += dy[d]
+                if self.validIndex(X, Y) and self.board[X][Y] == color:
+                    number += 1
+                else:
+                    break
+            if number == self.connect:
+                return True
+        return False
+
     def print(self):
         for y in range(self.height - 1, -1, -1):
             for x in range(self.width):
