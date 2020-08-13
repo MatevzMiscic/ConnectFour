@@ -3,7 +3,7 @@ import game
 import board
 import bot
 
-MAX_HEIGHT = 400
+MAX_HEIGHT = 460
 
 g = game.Game()
 

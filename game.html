@@ -1,5 +1,7 @@
 % import board
 
+% state = game.grid.outcome()
+
 <html>
 <head>
     <title>Four in a row</title>
@@ -12,8 +14,7 @@
             height: {{size}}px;
         }
         table {
-            border: 10px blue;
-            border-spacing: 0px;
+            border: 40px blue;
         }
         td {
             border: none;
@@ -43,6 +44,24 @@
             <div class="tile is-ancestor">
                 <div class="tile is-vertical is-parent">
                     <div class="tile is-child box">
+                        <p style="text-align:center">
+                            % if state == board.inProgress:
+                            % color = game.grid.turns % 2
+                            % if color == board.red:
+                            <strong class="has-text-danger">red's turn</strong>
+                            % else:
+                            <strong class="has-text-warning">yellow's turn</strong>
+                            % end
+                            % elif state == board.draw:
+                            <strong class="is-size-3">Draw</strong>
+                            % elif state == board.red:
+                            <strong class="has-text-danger is-size-3">red wins</strong>
+                            % elif state == board.blue:
+                            <strong class="has-text-warning is-size-3">yellow wins</strong>
+                            % end
+                        </p>
+                    </div>
+                    <div class="tile is-child box">
                         <p class="title">Navigation</p>
                         <form action="/back/" method="POST">
                             <button class="button is-fullwidth is-info"><strong>Back</strong></button>
@@ -62,27 +81,6 @@
                             <strong class="has-text-warning">{{game.score[1]}}</strong>
                         </p>
                     </div>
-
-                    <div class="tile is-child box">
-                        <p style="text-align:center">
-                        % state = game.grid.outcome()
-                        % if state == board.inProgress:
-                            % color = game.grid.turns % 2
-                            % if color == board.red:
-                                <strong class="has-text-danger">red's turn</strong>
-                            % else:
-                                <strong class="has-text-warning">yellow's turn</strong>
-                            % end
-                        % elif state == board.draw:
-                            <strong class="is-size-3">Draw</strong>
-                        % elif state == board.red:
-                            <strong class="has-text-danger is-size-3">red wins</strong>
-                        % elif state == board.blue:
-                            <strong class="has-text-warning is-size-3">yellow wins</strong>
-                        % end
-                        </p>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -93,9 +91,11 @@
                     % for j in range(game.width):
                     <td>
                         <form action="/play/{{j}}" method="GET">
-                            <button name="play" style="width: {{size}}px; height: {{size}}px;">
-                                %#<img src="https://www.transparenttextures.com/patterns/asfalt-light.png" alt="board">
-                            </button>
+                            % if state == board.inProgress and game.grid.validColumn(j):
+                            <button name="play" style="width: {{size}}px; height: {{size}}px;"></button>
+                            % else:
+                            <button name="play" style="width: {{size}}px; height: {{size}}px;" disabled></button>
+                            % end
                         </form>
                     </td>
                     % end
