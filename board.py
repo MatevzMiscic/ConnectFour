@@ -41,6 +41,9 @@ class Board:
     def validIndex(self, x, y):
         return 0 <= x and x < self.width and 0 <= y and y < self.height
 
+    def validColumn(self, col):
+        return 0 <= col and col < self.width and self.ground[col] < self.height
+
     def outcome(self):
         dx = [1, 1, 0, -1]
         dy = [0, -1, -1, -1]
