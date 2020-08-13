@@ -19,8 +19,8 @@ class Game:
         self.grid = board.Board(width, height, connect)
         return self.legal()
 
-    def setFirst(isBot):
+    def setFirst(self, isBot):
         self.bots[0] = isBot
     
-    def setSecond(isBot):
+    def setSecond(self, isBot):
         self.bots[1] = isBot
