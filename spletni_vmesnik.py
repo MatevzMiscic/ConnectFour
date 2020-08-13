@@ -4,6 +4,7 @@ import board
 import bot
 
 MAX_HEIGHT = 460
+DEPTH = 3
 
 g = game.Game()
 
@@ -37,6 +38,9 @@ def change_yellow():
 
 @bottle.post('/game/')
 def start_game():
+    if g.bots[0]:
+        move = bot.takeTurn(g.grid, 0, DEPTH)
+        g.grid.play(move)
     bottle.redirect('/game/')
 
 @bottle.get('/game/')
@@ -70,7 +74,7 @@ def play(col):
         g.grid.play(col)
         state = g.grid.outcome()
         if state == board.inProgress and g.bots[1 - on_turn]:
-            move = bot.takeTurn(g.grid, 1 - on_turn, 3)
+            move = bot.takeTurn(g.grid, 1 - on_turn, DEPTH)
             if g.grid.validColumn(move):
                 g.grid.play(move)
         state = g.grid.outcome()

@@ -15,6 +15,7 @@
         }
         table {
             border: 40px blue;
+            border-collapse: unset;
         }
         td {
             border: none;
@@ -92,7 +93,9 @@
                     <td>
                         <form action="/play/{{j}}" method="GET">
                             % if state == board.inProgress and game.grid.validColumn(j):
-                            <button name="play" style="width: {{size}}px; height: {{size}}px;"></button>
+                            <button name="play" style="width: {{size}}px; height: {{size}}px;">
+                                <img src="../img/token1.png">
+                            </button>
                             % else:
                             <button name="play" style="width: {{size}}px; height: {{size}}px;" disabled></button>
                             % end
