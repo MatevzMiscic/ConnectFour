@@ -24,45 +24,9 @@
             <div class="tile is-child box">
                 <p class="title">Grid settings</p>
                 <form action="/game/" method="POST">
-                    <div class="field">
-                        <label class="label">Width</label>
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select name="W">
-                                    <option>6</option>
-                                    <option selected>7</option>
-                                    <option>8</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Height</label>
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select name="H">
-                                    <option>5</option>
-                                    <option selected>6</option>
-                                    <option>7</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Connect</label>
-                        <div class="control">
-                            <div class="control">
-                                <div class="select is-fullwidth">
-                                    <select name="C">
-                                        <option selected>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-        
-                    </div>
+                    % include('_set_dimension.html', name='Width', label='Width', first=6, last=8, select=game.width)
+                    % include('_set_dimension.html', name='Height', label='Height', first=5, last=7, select=game.height)
+                    % include('_set_dimension.html', name='Connect', label='Connect', first=4, last=6, select=game.connect)
                     <div class="field">
                         <div class="control">
                             <button class="button is-info is-fullwidth">Play</button>
