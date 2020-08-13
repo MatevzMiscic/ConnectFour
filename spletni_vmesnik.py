@@ -1,4 +1,5 @@
 import bottle
+import game
 
 width = 7
 height = 6
@@ -7,24 +8,27 @@ connect = 4
 red = False
 yellow = True
 
+g = game.Game()
+
 @bottle.get('/')
 def index():
-    return bottle.template('index.html')
+    return bottle.template('index.html', game=g)
 
 @bottle.post('/game/')
 def start_game():
-    global width
-    global height
-    global connect
     width = int(bottle.request.forms["W"])
     height = int(bottle.request.forms["H"])
     connect = int(bottle.request.forms["C"])
     print(width, height, connect)
-    bottle.redirect('/game/')
+    legal = g.setBoard(width, height, connect)
+    if legal:
+        bottle.redirect('/game/')
+    else:
+        bottle.redirect('/')
 
 @bottle.get('/game/')
 def game():
-    return bottle.template('game.html')
+    return bottle.template('game.html', width=width, height=height)
 
 @bottle.get('/change_red/')
 def change_red():

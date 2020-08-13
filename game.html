@@ -43,7 +43,7 @@
                 <div class="tile is-vertical is-parent">
                     <div class="tile is-child box">
                         <p class="title">Navigation</p>
-                        <form>
+                        <form action="/" method="GET">
                             <button class="button is-fullwidth is-info"><strong>Back</strong></button>
                         </form>
                         <form>
@@ -68,7 +68,7 @@
         <div class="column">
             <div class="container" style="width: 560;">
                 <table>
-                    % for j in range(7):
+                    % for j in range(width):
                     <td>
                         <form action="/igraj/" method="POST">
                             <button name="igraj" style="width: 80px; height: 80px;">
@@ -78,9 +78,9 @@
                     </td>
                     % end
         
-                    % for i in range(6):
+                    % for i in range(height):
                     <tr>
-                        % for j in range(7):
+                        % for j in range(width):
                         <td><img src="../img/board.png"></td>
                         % end
                     </tr>
