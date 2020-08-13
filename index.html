@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Four in a row</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+</head>
+
+<body>
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Four in a row</h1>
+                <h2 class="subtitle">Najbljša igra za preganjanje dolgčasa</h2>
+            </div>
+        </div>
+    </section>
+
+    <div class="tile is-ancestor">
+        <div class="tile is-4 is-vertical is-parent">
+            <div class="tile is-child box">
+                <p class="title">Grid settings</p>
+                <form action="/game/" method="POST">
+                    <div class="field">
+                        <label class="label">Width</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="W">
+                                    <option>6</option>
+                                    <option selected>7</option>
+                                    <option>8</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Height</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="H">
+                                    <option>5</option>
+                                    <option selected>6</option>
+                                    <option>7</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Connect</label>
+                        <div class="control">
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select name="C">
+                                        <option selected>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-info is-fullwidth">Play</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tile is-4 is-vertical is-parent">
+            <div class="tile is-child box">
+                <p class="title">Red player</p>
+                <form action="/change_red/" method="GET">
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="red_control">
+                                    <option>Human</option>
+                                    <option>Computer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-info is-fullwidth">Apply</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tile is-child box">
+                <p class="title">Yellow player</p>
+                <form action="/change_yellow/" method="Get">
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="yellow_control">
+                                    <option>Human</option>
+                                    <option>Computer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-info is-fullwidth">Apply</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tile is-4 is-parent">
+            <div class="tile is-child box">
+                <p class="title">Game rules</p>
+                <p>Four in a row, najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa 
+                    Four in a row Najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa 
+                    Four in a row Najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa 
+                    Four in a row Najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa 
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
