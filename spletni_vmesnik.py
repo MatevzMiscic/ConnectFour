@@ -1,7 +1,8 @@
 import bottle
 import game
+import bot
 
-MAX_HEIGHT = 500
+MAX_HEIGHT = 400
 
 g = game.Game()
 
@@ -39,16 +40,36 @@ def start_game():
 
 @bottle.get('/game/')
 def game():
-    return bottle.template('game.html', game=g)
+    size = MAX_HEIGHT / g.height
+    grid_width = size * g.width
+    return bottle.template('game.html', game=g, size=size, grid_width=grid_width)
+
+@bottle.post('/back/')
+def back():
+    g.reset()
+    bottle.redirect('/')
+
+@bottle.post('/reset/')
+def reset():
+    g.reset()
+    bottle.redirect('/game/')
+
+@bottle.post('/undo/')
+def undo():
+    g.grid.undo()
+    while(g.bots[g.grid.turns % 2]):
+        g.grid.undo()
+    bottle.redirect('/game/')
 
 @bottle.get('/play/<col:int>')
 def play(col):
-    print(col)
+    on_turn = g.grid.turns % 2
+    if not g.bots[on_turn]:
+        g.grid.play(col)
+        if g.bots[1 - on_turn]:
+            move = bot.takeTurn(g.grid, 1 - on_turn, 3)
+            g.grid.play(move)
     bottle.redirect('/game/')
-
-@bottle.get('/kvadriraj/<n:int>')
-def kvadriraj(n):
-    return '{}^2 = {}'.format(n, n ** 2)
 
 @bottle.get('/img/<picture>')
 def serve_pictures(picture):

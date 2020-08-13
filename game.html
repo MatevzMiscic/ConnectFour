@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <style>
         img {
-            width: 80px;
-            height: 80px;
+            width: {{size}}px;
+            height: {{size}}px;
         }
         table {
             border: 10px blue;
@@ -43,13 +43,13 @@
                 <div class="tile is-vertical is-parent">
                     <div class="tile is-child box">
                         <p class="title">Navigation</p>
-                        <form action="/" method="GET">
+                        <form action="/back/" method="POST">
                             <button class="button is-fullwidth is-info"><strong>Back</strong></button>
                         </form>
-                        <form>
+                        <form action="/reset/" method="POST">
                             <button class="button is-fullwidth is-light">Reset game</button>
                         </form>
-                        <form>
+                        <form action="/undo/" method="POST">
                             <button class="button is-fullwidth is-light">Undo</button>
                         </form>
                     </div>
@@ -66,12 +66,12 @@
         </div>
 
         <div class="column">
-            <div class="container" style="width: 560;">
+            <div class="container" style="width: {{grid_width}};">
                 <table>
                     % for j in range(game.width):
                     <td>
                         <form action="/play/{{j}}" method="GET">
-                            <button name="play" style="width: 80px; height: 80px;">
+                            <button name="play" style="width: {{size}}px; height: {{size}}px;">
                                 %#<img src="https://www.transparenttextures.com/patterns/asfalt-light.png" alt="board">
                             </button>
                         </form>
@@ -82,7 +82,7 @@
                     <tr>
                         % for j in range(game.width):
                         <td>
-                            % token = game.grid.board[j][i]
+                            % token = game.grid.board[j][game.height - 1 - i]
                             % if token == 0:
                             <img src="../img/token1.png">
                             % elif token == 1:

@@ -24,3 +24,6 @@ class Game:
     
     def setSecond(self, isBot):
         self.bots[1] = isBot
+
+    def reset(self):
+        self.grid = board.Board(self.width, self.height, self.connect)
