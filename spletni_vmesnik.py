@@ -48,6 +48,7 @@ def game():
 @bottle.post('/back/')
 def back():
     g.reset()
+    g.resetScore()
     bottle.redirect('/')
 
 @bottle.post('/reset/')
@@ -67,10 +68,16 @@ def play(col):
     on_turn = g.grid.turns % 2
     if g.grid.outcome() == board.inProgress and g.grid.validColumn(col) and not g.bots[on_turn]:
         g.grid.play(col)
-        if g.grid.outcome() == board.inProgress and g.bots[1 - on_turn]:
+        state = g.grid.outcome()
+        if state == board.inProgress and g.bots[1 - on_turn]:
             move = bot.takeTurn(g.grid, 1 - on_turn, 3)
             if g.grid.validColumn(move):
                 g.grid.play(move)
+        state = g.grid.outcome()
+        if state == board.red:
+            g.firstWins()
+        elif state == board.blue:
+            g.secondWins()
     bottle.redirect('/game/')
 
 @bottle.get('/img/<picture>')
