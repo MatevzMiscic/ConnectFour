@@ -11,7 +11,7 @@
             height: 80px;
         }
         table {
-            border: none;
+            border: 10px blue;
             border-spacing: 0px;
         }
         td {
@@ -68,20 +68,29 @@
         <div class="column">
             <div class="container" style="width: 560;">
                 <table>
-                    % for j in range(width):
+                    % for j in range(game.width):
                     <td>
-                        <form action="/igraj/" method="POST">
-                            <button name="igraj" style="width: 80px; height: 80px;">
+                        <form action="/play/{{j}}" method="GET">
+                            <button name="play" style="width: 80px; height: 80px;">
                                 %#<img src="https://www.transparenttextures.com/patterns/asfalt-light.png" alt="board">
                             </button>
                         </form>
                     </td>
                     % end
         
-                    % for i in range(height):
+                    % for i in range(game.height):
                     <tr>
-                        % for j in range(width):
-                        <td><img src="../img/board.png"></td>
+                        % for j in range(game.width):
+                        <td>
+                            % token = game.grid.board[j][i]
+                            % if token == 0:
+                            <img src="../img/token1.png">
+                            % elif token == 1:
+                            <img src="../img/token2.png">
+                            % else:
+                            <img src="../img/board.png">
+                            % end
+                        </td>
                         % end
                     </tr>
                     % end
@@ -91,7 +100,6 @@
 
     </div>
     </div>
-
 </body>
 
 </html>

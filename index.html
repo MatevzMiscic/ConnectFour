@@ -19,17 +19,19 @@
         </div>
     </section>
 
+    <div class="container">
+
     <div class="tile is-ancestor">
         <div class="tile is-4 is-vertical is-parent">
             <div class="tile is-child box">
                 <p class="title">Grid settings</p>
-                <form action="/game/" method="POST">
+                <form action="/set_grid/" method="POST">
                     % include('_set_dimension.html', name='W', label='Width', first=6, last=8, select=game.width)
                     % include('_set_dimension.html', name='H', label='Height', first=5, last=7, select=game.height)
                     % include('_set_dimension.html', name='C', label='Connect', first=4, last=6, select=game.connect)
                     <div class="field">
-                        <div class="control">
-                            <button class="button is-info is-fullwidth">Play</button>
+                        <div class="control" style="margin-top: 28px;">
+                            <button class="button is-info is-fullwidth">Apply</button>
                         </div>
                     </div>
                 </form>
@@ -38,29 +40,40 @@
         <div class="tile is-4 is-vertical is-parent">
             <div class="tile is-child box">
                 <p class="title">Red player</p>
-                <form action="/change_red/" method="GET">
-                    % include('_set_controls.html', name='red_control', computer=True)
+                <form action="/change_red/" method="POST">
+                    % include('_set_controls.html', name='red_control', computer=game.bots[0])
                 </form>
             </div>
             <div class="tile is-child box">
                 <p class="title">Yellow player</p>
-                <form action="/change_yellow/" method="Get">
-                    % include('_set_controls.html', name='yellow_control', computer=False)
+                <form action="/change_yellow/" method="POST">
+                    % include('_set_controls.html', name='yellow_control', computer=game.bots[1])
                 </form>
             </div>
         </div>
         <div class="tile is-4 is-parent">
             <div class="tile is-child box">
                 <p class="title">Game rules</p>
-                <p>Four in a row, najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa 
-                    Four in a row Najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa 
-                    Four in a row Najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa 
-                    Four in a row Najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa 
-                </p>
+
+                <div class="field">
+                    <p>Four in a row, najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa
+                        Four in a row Najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa
+                        Four in a row Najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa
+                        Four in a row Najbljša igra za preganjanje dolgčasa Four in a row Najbljša igra za preganjanje dolgčasa
+                    </p>
+                </div>
+
+                <form action="/game/" method="POST">
+                    <div class="field">
+                        <div class="control" style="margin-top: 28px;">
+                            <button class="button is-link is-fullwidth"><strong>Play</strong></button>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
-
+    </div>
 </body>
-
 </html>

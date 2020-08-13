@@ -1,12 +1,7 @@
 import bottle
 import game
 
-width = 7
-height = 6
-connect = 4
-
-red = False
-yellow = True
+MAX_HEIGHT = 500
 
 g = game.Game()
 
@@ -14,46 +9,44 @@ g = game.Game()
 def index():
     return bottle.template('index.html', game=g)
 
-@bottle.post('/game/')
-def start_game():
+@bottle.post('/set_grid/')
+def set_grid():
     width = int(bottle.request.forms["W"])
     height = int(bottle.request.forms["H"])
     connect = int(bottle.request.forms["C"])
     print(width, height, connect)
     legal = g.setBoard(width, height, connect)
     if legal:
-        bottle.redirect('/game/')
+        bottle.redirect('/')
     else:
         bottle.redirect('/')
 
+@bottle.post('/change_red/')
+def change_red():
+    computer = (bottle.request.forms['red_control'] == 'Computer')
+    g.setFirst(computer)
+    bottle.redirect('/')
+
+@bottle.post('/change_yellow/')
+def change_yellow():
+    computer = (bottle.request.forms['yellow_control'] == 'Computer')
+    g.setSecond(computer)
+    bottle.redirect('/')
+
+@bottle.post('/game/')
+def start_game():
+    bottle.redirect('/game/')
+
 @bottle.get('/game/')
 def game():
-    return bottle.template('game.html', width=width, height=height)
+    return bottle.template('game.html', game=g)
 
-@bottle.get('/change_red/')
-def change_red():
-    global red
-    red = (bottle.request.query['red_control'] == 'Computer')
-    bottle.redirect('/')
+@bottle.get('/play/<col:int>')
+def play(col):
+    print(col)
+    bottle.redirect('/game/')
 
-@bottle.get('/change_yellow/')
-def change_yellow():
-    global yellow
-    yellow = (bottle.request.query['yellow_control'] == 'Computer')
-    bottle.redirect('/')
-
-
-@bottle.get('/sestej/')
-def sestej():
-    a = int(bottle.request.query['stA'])
-    b = int(bottle.request.query['stB'])
-    return "{} + {} = {}".format(a, b, a + b)
-
-@bottle.get('/pozdravi/<ime>')
-def pozdravi(ime):
-    return 'Živjo, <b>{}</b>!'.format(ime)
-
-@bottle.get('/kvad/<n:int>')
+@bottle.get('/kvadriraj/<n:int>')
 def kvadriraj(n):
     return '{}^2 = {}'.format(n, n ** 2)
 
