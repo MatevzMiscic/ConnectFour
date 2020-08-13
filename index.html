@@ -24,9 +24,9 @@
             <div class="tile is-child box">
                 <p class="title">Grid settings</p>
                 <form action="/game/" method="POST">
-                    % include('_set_dimension.html', name='Width', label='Width', first=6, last=8, select=game.width)
-                    % include('_set_dimension.html', name='Height', label='Height', first=5, last=7, select=game.height)
-                    % include('_set_dimension.html', name='Connect', label='Connect', first=4, last=6, select=game.connect)
+                    % include('_set_dimension.html', name='W', label='Width', first=6, last=8, select=game.width)
+                    % include('_set_dimension.html', name='H', label='Height', first=5, last=7, select=game.height)
+                    % include('_set_dimension.html', name='C', label='Connect', first=4, last=6, select=game.connect)
                     <div class="field">
                         <div class="control">
                             <button class="button is-info is-fullwidth">Play</button>
@@ -39,41 +39,13 @@
             <div class="tile is-child box">
                 <p class="title">Red player</p>
                 <form action="/change_red/" method="GET">
-                    <div class="field">
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select name="red_control">
-                                    <option>Human</option>
-                                    <option>Computer</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-info is-fullwidth">Apply</button>
-                        </div>
-                    </div>
+                    % include('_set_controls.html', name='red_control', computer=True)
                 </form>
             </div>
             <div class="tile is-child box">
                 <p class="title">Yellow player</p>
                 <form action="/change_yellow/" method="Get">
-                    <div class="field">
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select name="yellow_control">
-                                    <option>Human</option>
-                                    <option>Computer</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-info is-fullwidth">Apply</button>
-                        </div>
-                    </div>
+                    % include('_set_controls.html', name='yellow_control', computer=False)
                 </form>
             </div>
         </div>

@@ -1,0 +1,20 @@
+<div class="field">
+    <div class="control">
+        <div class="select is-fullwidth">
+            <select name="{{name}}">
+            % if computer:
+                <option>Human</option>
+                <option selected>Computer</option>
+            % else:
+                <option selected>Human</option>
+                <option>Computer</option>
+            % end
+            </select>
+        </div>
+    </div>
+</div>
+<div class="field">
+    <div class="control">
+        <button class="button is-info is-fullwidth">Apply</button>
+    </div>
+</div>
