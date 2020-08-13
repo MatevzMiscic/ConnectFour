@@ -5,7 +5,32 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-
+    <style>
+        img {
+            width: 80px;
+            height: 80px;
+        }
+        table {
+            border: none;
+            border-spacing: 0px;
+        }
+        td {
+            border: none;
+            margin: 0px;
+            padding: 0px;
+        }
+        button {
+            border: none;
+            outline: none;
+            display: inline-block;
+            padding: 0px;
+            margin: 0px;
+            background-color: rgba(24, 117, 248, 0);
+        }
+        button:active {
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,6 +65,29 @@
             </div>
         </div>
 
+        <div class="column">
+            <div class="container" style="width: 560;">
+                <table>
+                    % for j in range(7):
+                    <td>
+                        <form action="/igraj/" method="POST">
+                            <button name="igraj" style="width: 80px; height: 80px;">
+                                %#<img src="https://www.transparenttextures.com/patterns/asfalt-light.png" alt="board">
+                            </button>
+                        </form>
+                    </td>
+                    % end
+        
+                    % for i in range(6):
+                    <tr>
+                        % for j in range(7):
+                        <td><img src="../img/board.png"></td>
+                        % end
+                    </tr>
+                    % end
+                </table>
+            </div>
+        </div>
 
     </div>
     </div>
