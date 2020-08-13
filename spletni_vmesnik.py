@@ -1,5 +1,6 @@
 import bottle
 import game
+import board
 import bot
 
 MAX_HEIGHT = 400
@@ -64,11 +65,12 @@ def undo():
 @bottle.get('/play/<col:int>')
 def play(col):
     on_turn = g.grid.turns % 2
-    if not g.bots[on_turn]:
+    if g.grid.outcome() == board.inProgress and g.grid.validColumn(col) and not g.bots[on_turn]:
         g.grid.play(col)
-        if g.bots[1 - on_turn]:
+        if g.grid.outcome() == board.inProgress and g.bots[1 - on_turn]:
             move = bot.takeTurn(g.grid, 1 - on_turn, 3)
-            g.grid.play(move)
+            if g.grid.validColumn(move):
+                g.grid.play(move)
     bottle.redirect('/game/')
 
 @bottle.get('/img/<picture>')

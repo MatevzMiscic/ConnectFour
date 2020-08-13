@@ -1,5 +1,6 @@
-<html>
+% import board
 
+<html>
 <head>
     <title>Four in a row</title>
     <meta charset="utf-8">
@@ -61,6 +62,27 @@
                             <strong class="has-text-warning">3</strong>
                         </p>
                     </div>
+
+                    <div class="tile is-child box">
+                        <p style="text-align:center">
+                        % state = game.grid.outcome()
+                        % if state == board.inProgress:
+                            % color = game.grid.turns % 2
+                            % if color == board.red:
+                                <strong class="has-text-danger">red's turn</strong>
+                            % else:
+                                <strong class="has-text-warning">yellow's turn</strong>
+                            % end
+                        % elif state == board.draw:
+                            <strong class="is-size-3">Draw</strong>
+                        % elif state == board.red:
+                            <strong class="has-text-danger is-size-3">red wins</strong>
+                        % elif state == board.blue:
+                            <strong class="has-text-warning is-size-3">yellow wins</strong>
+                        % end
+                        </p>
+                    </div>
+
                 </div>
             </div>
         </div>
