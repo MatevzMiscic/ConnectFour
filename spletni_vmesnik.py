@@ -114,6 +114,6 @@ def play(col):
 def serve_pictures(picture):
     return bottle.static_file(picture, root='img')
 
-#bottle.run(host='localhost', port=8080, debug=True, reloader=True)
-bottle.run(debug=True, reloader=True)
+bottle.run(host='localhost', port=8080, debug=True, reloader=True)
+#bottle.run(debug=True, reloader=True)
 #bottle.run()
