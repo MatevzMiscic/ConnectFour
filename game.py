@@ -9,16 +9,12 @@ class Game:
         self.bots = [False, True]
         self.score = [0, 0]
         self.grid = board.Board(self.width, self.height, self.connect)
-    
-    def legal(self):
-        return self.connect <= self.width and self.connect <= self.height
 
     def setBoard(self, width, height, connect):
         self.width = width
         self.height = height
         self.connect = connect
         self.grid = board.Board(width, height, connect)
-        return self.legal()
 
     def setFirst(self, isBot):
         self.bots[0] = isBot
