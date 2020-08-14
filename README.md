@@ -2,7 +2,7 @@
 
 ## Zagon
 Povprečen uporabnik naj za uporabo programa zažene `spletni_vmesnik.py`.  
-Heker lahko nameto tega zažene tekstovni vmesnik, to je `interface.py`.
+Heker lahko nameto tega zažene `tekstovni_vmesnik.py`.
 
 ## Uporaba
 
