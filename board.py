@@ -76,20 +76,21 @@ class Board:
         color = self.board[x][y]
         if color == 2:
              return False
-        dx = [1, 1, 0, -1, -1, -1, 0, 1]
-        dy = [0, -1, -1, -1, 0, 1, 1, 1]
-        directions = 8
+        dx = [1, 1, 0, -1]
+        dy = [0, -1, -1, -1]
+        directions = 4
         for d in range(directions):
             number = 1
-            X = x
-            Y = y
-            for i in range(self.connect - 1):
-                X += dx[d]
-                Y += dy[d]
-                if self.validIndex(X, Y) and self.board[X][Y] == color:
-                    number += 1
-                else:
-                    break
+            for m in [1, -1]:
+                X = x
+                Y = y
+                for i in range(self.connect - 1):
+                    X += m * dx[d]
+                    Y += m * dy[d]
+                    if self.validIndex(X, Y) and self.board[X][Y] == color:
+                        number += 1
+                    else:
+                        break
             if number == self.connect:
                 return True
         return False
