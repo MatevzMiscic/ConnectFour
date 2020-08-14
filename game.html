@@ -1,7 +1,9 @@
 % import board
 
 % state = game.grid.outcome()
-% slike = ["../img/token1.png", "../img/token2.png", "../img/board.png"]
+% cells = ["../img/token1_inGrid.png", "../img/token2_inGrid.png", "../img/board.png"]
+% winning_cells = ["../img/winningToken1_inGrid.png", "../img/winningToken2_inGrid.png"]
+% tokens = ["../img/token1.png", "../img/token2.png"]
 
 <html>
 <head>
@@ -100,7 +102,7 @@
                         % if state == board.inProgress and game.grid.validColumn(j):
                             % color = game.grid.turns % 2
                             <button name="play" style="width: {{size}}px; height: {{size}}px;">
-                                <img src={{slike[color]}} style="opacity: 0.3;">
+                                <img src={{tokens[color]}} style="opacity: 0.3;">
                             </button>
                         % else:
                             <button name="play" style="width: {{size}}px; height: {{size}}px;" disabled></button>
@@ -114,7 +116,11 @@
                         % for j in range(game.width):
                         <td>
                             % token = game.grid.board[j][game.height - 1 - i]
-                            <img src={{slike[token]}}>
+                            % if state in [board.red, board.blue] and game.grid.isWinningToken(j, game.height - 1 - i):
+                            <img src={{winning_cells[token]}}>
+                            % else:
+                            <img src={{cells[token]}}>
+                            %end
                         </td>
                         % end
                     </tr>
