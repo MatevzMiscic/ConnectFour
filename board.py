@@ -91,7 +91,7 @@ class Board:
                         number += 1
                     else:
                         break
-            if number == self.connect:
+            if number >= self.connect:
                 return True
         return False
 
