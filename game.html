@@ -1,6 +1,7 @@
 % import board
 
 % state = game.grid.outcome()
+% slike = ["../img/token1.png", "../img/token2.png", "../img/board.png"]
 
 <html>
 <head>
@@ -71,7 +72,11 @@
                             <button class="button is-fullwidth is-light">Reset game</button>
                         </form>
                         <form action="/undo/" method="POST">
+                            % if state == board.inProgress and game.grid.turns > 0:
                             <button class="button is-fullwidth is-light">Undo</button>
+                            % else:
+                            <button class="button is-fullwidth is-light" disabled>Undo</button>
+                            % end
                         </form>
                     </div>
                     <div class="tile is-child box">
@@ -92,13 +97,14 @@
                     % for j in range(game.width):
                     <td>
                         <form action="/play/{{j}}" method="GET">
-                            % if state == board.inProgress and game.grid.validColumn(j):
+                        % if state == board.inProgress and game.grid.validColumn(j):
+                            % color = game.grid.turns % 2
                             <button name="play" style="width: {{size}}px; height: {{size}}px;">
-                                <img src="../img/token1.png">
+                                <img src={{slike[color]}} style="opacity: 0.3;">
                             </button>
-                            % else:
+                        % else:
                             <button name="play" style="width: {{size}}px; height: {{size}}px;" disabled></button>
-                            % end
+                        % end
                         </form>
                     </td>
                     % end
@@ -108,13 +114,7 @@
                         % for j in range(game.width):
                         <td>
                             % token = game.grid.board[j][game.height - 1 - i]
-                            % if token == 0:
-                            <img src="../img/token1.png">
-                            % elif token == 1:
-                            <img src="../img/token2.png">
-                            % else:
-                            <img src="../img/board.png">
-                            % end
+                            <img src={{slike[token]}}>
                         </td>
                         % end
                     </tr>

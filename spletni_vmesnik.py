@@ -62,9 +62,10 @@ def reset():
 
 @bottle.post('/undo/')
 def undo():
-    g.grid.undo()
-    while(g.bots[g.grid.turns % 2]):
+    if g.grid.turns > 0:
         g.grid.undo()
+        while(g.bots[g.grid.turns % 2]):
+            g.grid.undo()
     bottle.redirect('/game/')
 
 @bottle.get('/play/<col:int>')
