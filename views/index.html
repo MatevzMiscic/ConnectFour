@@ -18,7 +18,6 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">Four in a row</h1>
-                <h2 class="subtitle">Najbljša igra za preganjanje dolgčasa</h2>
             </div>
         </div>
     </section>
@@ -27,14 +26,14 @@
 
     <div class="tile is-ancestor">
         <div class="tile is-4 is-vertical is-parent">
-            <div class="tile is-child box">
+            <div class="tile is-child box" style="display:flex; flex-direction:column; justify-content:space-between;">
                 <p class="title">Grid settings</p>
                 <form action="/set_grid/" method="POST">
                     % include('_set_dimension.html', name='W', label='Width', first=6, last=8, select=game.width)
                     % include('_set_dimension.html', name='H', label='Height', first=5, last=7, select=game.height)
                     % include('_set_dimension.html', name='C', label='Connect', first=3, last=5, select=game.connect)
-                    <div class="field">
-                        <div class="control" style="margin-top: 28px;">
+                    <div class="field" style="margin-top: 50px;">
+                        <div class="control">
                             <button class="button is-info is-fullwidth">Apply</button>
                         </div>
                     </div>
@@ -42,13 +41,13 @@
             </div>
         </div>
         <div class="tile is-4 is-vertical is-parent">
-            <div class="tile is-child box">
+            <div class="tile is-child box" style="display:flex; flex-direction:column; justify-content:space-between;">
                 <p class="title">Red player</p>
                 <form action="/change_red/" method="POST">
                     % include('_set_controls.html', name='red_control', computer=game.bots[0])
                 </form>
             </div>
-            <div class="tile is-child box">
+            <div class="tile is-child box" style="display:flex; flex-direction:column; justify-content:space-between;">
                 <p class="title">Yellow player</p>
                 <form action="/change_yellow/" method="POST">
                     % include('_set_controls.html', name='yellow_control', computer=game.bots[1])
@@ -56,7 +55,7 @@
             </div>
         </div>
         <div class="tile is-4 is-parent">
-            <div class="tile is-child box">
+            <div class="tile is-child box" style="display:flex; flex-direction:column; justify-content:space-between;">
                 <p class="title">Game rules</p>
 
                 <div class="field">
@@ -72,7 +71,7 @@
 
                 <form action="/game/" method="POST">
                     <div class="field">
-                        <div class="control" style="margin-top: 28px;">
+                        <div class="control" style="margin-top: 0px;">
                             <button class="button is-link is-fullwidth"><strong>Play</strong></button>
                         </div>
                     </div>

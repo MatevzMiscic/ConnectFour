@@ -4,7 +4,7 @@ import game
 import board
 import bot
 
-MAX_HEIGHT = 460
+MAX_HEIGHT = 440
 DEPTH = 3
 SECRET = 'bottle je trash'
 
