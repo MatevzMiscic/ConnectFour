@@ -6,7 +6,7 @@ import bot
 
 MAX_HEIGHT = 440
 DEPTH = 3
-SECRET = 'bottle je trash'
+SECRET = 'haha ne gledat kaj je tle prej pisal'
 
 users = {}
 
@@ -114,6 +114,5 @@ def play(col):
 def serve_pictures(picture):
     return bottle.static_file(picture, root='img')
 
-bottle.run(host='localhost', port=8080, debug=True, reloader=True)
-#bottle.run(debug=True, reloader=True)
-#bottle.run()
+#bottle.run(host='localhost', port=8080, debug=True, reloader=True)
+bottle.run(debug=True, reloader=True)
