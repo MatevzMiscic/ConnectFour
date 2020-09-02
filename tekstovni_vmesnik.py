@@ -78,6 +78,7 @@ def play():
                 continue
             if command == "ponastavi":
                 user.reset()
+                continue
             if command == "nazaj":
                 return
             if not command.isdigit():
