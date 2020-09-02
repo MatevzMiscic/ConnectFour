@@ -7,10 +7,10 @@ draw = 3
 
 class Board:
 
-    def __init__(self, width, height, connect):
+    def __init__(self, width=7, height=6, connect=4):
         self.width = width
         self.height = height
-        self.connect = min(width, height, max(connect, 3))
+        self.connect = connect
         self.board = [[empty for y in range(height)] for x in range(width)]
         self.ground = [0 for x in range(width)]
         self.history = []
@@ -75,7 +75,7 @@ class Board:
             return False
         color = self.board[x][y]
         if color == 2:
-             return False
+            return False
         dx = [1, 1, 0, -1]
         dy = [0, -1, -1, -1]
         directions = 4

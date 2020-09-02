@@ -112,9 +112,9 @@ def evaluate(b):
                 break
         if winner[0] == board.red and winner[1] != board.blue:
             lateGame += 1
-        elif winner[0] == board.blue and winner[1] != board.red:
+        elif winner[1] == board.blue and winner[0] != board.red:
             lateGame -= 1
-        value += (1 + 2 * b.turns / (b.width * b.height)) * lateGame
+        value += (2 + 2 * b.turns / (b.width * b.height)) * lateGame
     if doubleTrapHeight[0] < b.height or doubleTrapHeight[1] < b.height:
         if doubleTrapHeight[color] <= doubleTrapHeight[1 - color]:
             return sign(color, 0) * (win - doubleTrapHeight[color])

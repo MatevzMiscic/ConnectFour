@@ -5,8 +5,8 @@ import board
 import bot
 
 MAX_HEIGHT = 440
-DEPTH = 3
-SECRET = 'haha ne gledat kaj je tle prej pisal'
+DEPTH = 4
+SECRET = 'zanimiva skrivnost'
 
 users = {}
 
@@ -18,12 +18,12 @@ def get_user():
         while new_name in users:
             new_name = str(random.randint(0, 2 ** 32))
         name = new_name
-        print("someone is getting new name:", new_name)
+        #print("someone is getting a new name:", new_name)
     if name not in users:
         user = game.Game()
         users[name] = user
-        print("new user")
-    bottle.response.set_cookie('name', name, secret=SECRET)
+        #print("new user")
+    bottle.response.set_cookie('name', name, path='/', secret=SECRET)
     return users[name]
 
 @bottle.get('/')
@@ -37,7 +37,7 @@ def set_grid():
     width = int(bottle.request.forms["W"])
     height = int(bottle.request.forms["H"])
     connect = int(bottle.request.forms["C"])
-    print(width, height, connect)
+    #print(width, height, connect)
     g.setBoard(width, height, connect)
     bottle.redirect('/')
 
@@ -94,6 +94,7 @@ def undo():
 
 @bottle.get('/play/<col:int>')
 def play(col):
+    #print("Played in column", col)
     g = get_user()
     on_turn = g.grid.turns % 2
     if g.grid.outcome() == board.inProgress and g.grid.validColumn(col) and not g.bots[on_turn]:
@@ -114,5 +115,5 @@ def play(col):
 def serve_pictures(picture):
     return bottle.static_file(picture, root='img')
 
-#bottle.run(host='localhost', port=8080, debug=True, reloader=True)
-bottle.run(debug=True, reloader=True)
+bottle.run(host='localhost', port=8080, debug=True, reloader=True)
+#bottle.run(debug=True, reloader=True)
