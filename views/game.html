@@ -52,16 +52,16 @@
                             % if state == board.inProgress:
                             % color = game.grid.turns % 2
                             % if color == board.red:
-                            <strong class="has-text-danger">red's turn</strong>
+                            <strong class="has-text-danger">Red's turn</strong>
                             % else:
-                            <strong class="has-text-warning">yellow's turn</strong>
+                            <strong class="has-text-warning">Yellow's turn</strong>
                             % end
                             % elif state == board.draw:
                             <strong class="is-size-3">Draw</strong>
                             % elif state == board.red:
-                            <strong class="has-text-danger is-size-3">red wins</strong>
+                            <strong class="has-text-danger is-size-3">Red wins</strong>
                             % elif state == board.blue:
-                            <strong class="has-text-warning is-size-3">yellow wins</strong>
+                            <strong class="has-text-warning is-size-3">Yellow wins</strong>
                             % end
                         </p>
                     </div>
@@ -120,7 +120,7 @@
                             <img src={{winning_cells[token]}}>
                             % else:
                             <img src={{cells[token]}}>
-                            %end
+                            % end
                         </td>
                         % end
                     </tr>
